@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Connection Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🌐</div>
+        <div>
+            <h1>Network Connection Analyzer</h1>
+            <p>Visualize and analyze your network connections</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="stats">
+            <div class="stat-card">
+                <span>Devices</span>
+                <strong id="deviceCount">0</strong>
+            </div>
+            <div class="stat-card">
+                <span>Connections</span>
+                <strong id="connectionCount">0</strong>
+            </div>
+            <div class="stat-card">
+                <span>Network Status</span>
+                <strong id="networkStatus">Empty</strong>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Manage Network</h2>
+            <div class="controls">
+                <input id="deviceName" type="text" placeholder="Enter device name">
+                <button id="addDevice">+ Add Device</button>
+            </div>
+
+            <div class="controls">
+                <select id="connectFrom">
+                    <option value="">Select first device</option>
+                </select>
+                <select id="connectTo">
+                    <option value="">Select second device</option>
+                </select>
+                <button id="connectDevices">Connect</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="section-heading">
+                <h2>Network Topology</h2>
+                <span class="live-dot">● Live visualization</span>
+            </div>
+            <div id="graph" class="graph">
+                <p class="empty-message">Add devices to build your network.</p>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Network Analysis</h2>
+            <div class="analysis-buttons">
+                <button id="dfsButton">Run DFS</button>
+                <button id="pathButton" class="secondary">Check Path</button>
+                <button id="resetButton" class="danger">Reset Network</button>
+            </div>
+            <div class="controls">
+                <select id="pathFrom">
+                    <option value="">Path: starting device</option>
+                </select>
+                <select id="pathTo">
+                    <option value="">Path: destination device</option>
+                </select>
+            </div>
+            <div id="result" class="result">Analysis results will appear here.</div>
+        </section>
+
+        <section class="panel note">
+            <h2>About this version</h2>
+            <p>This browser version demonstrates network topology, device connections, graph traversal and path checking. Physical network scanning, IP/MAC detection and ping tests are available in the native desktop application.</p>
+        </section>
+    </main>
+
+    <footer>Network Connection Analyzer · C++ Desktop + Web Edition</footer>
+    <script src="script.js"></script>
+</body>
+</html>
