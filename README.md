@@ -58,7 +58,9 @@ The project demonstrates how graph data structures can represent network devices
 | Graph Search | Checks connectivity and paths |
 
 ## 🖥️ Application Interface
-
+<p align="center">
+  <img src="screenshots/network-analyzer.png" width="800" alt="Network Connection Analyzer application">
+</p>
 The application includes:
 
 - A device information table showing IP and MAC addresses.
