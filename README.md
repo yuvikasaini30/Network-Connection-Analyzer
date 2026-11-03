@@ -1,145 +1,115 @@
 # 🌐 Network Connection Analyzer
 
-### 💻 Advanced Data Structures Project | C++ & Qt5
+### C++ | Qt5 | Advanced Data Structures
 
-![C++](https://img.shields.io/badge/Language-C++-blue?style=for-the-badge&logo=cplusplus)
-![Qt](https://img.shields.io/badge/GUI-Qt5-green?style=for-the-badge&logo=qt)
-![Data Structure](https://img.shields.io/badge/Data_Structure-Graph-orange?style=for-the-badge)
-![Algorithm](https://img.shields.io/badge/Algorithm-DFS-purple?style=for-the-badge)
-![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey?style=for-the-badge)
+A desktop-based Network Connection Analyzer developed using **C++ and Qt5**. The application combines network connectivity testing with graph-based representation and traversal of connected devices.
 
----
+## 🚀 Features
 
-## 📌 About The Project
+- **IP Address Detection:** Detects the current system's IP address.
+- **MAC Address Detection:** Retrieves the MAC address of the active network interface.
+- **Device Management:** Add devices manually.
+- **Network Visualization:** Displays devices and their connections using a graphical interface.
+- **Connection Management:** Create connections between devices.
+- **DFS Traversal:** Performs Depth First Search on the network graph.
+- **Path Checking:** Checks whether a path exists between two devices.
+- **Connectivity Testing:** Checks whether an IP address is reachable using ping.
+- **Latency Measurement:** Displays the response time in milliseconds.
+- **Reset Function:** Clears the current network graph and device table.
+- **Desktop Launcher:** Opens the GUI through a desktop shortcut with a custom globe icon.
 
-The **Network Connection Analyzer** is a C++ desktop application developed using **Qt5 Widgets**.
-
-It simulates a computer network using a **Graph Data Structure**, where devices are represented as vertices and connections are represented as edges.
-
-The application allows users to create and visualize network connections, perform Depth First Search (DFS), check connectivity between devices, and find possible routes.
-
-It demonstrates how graph algorithms can be used to represent and analyze network structures.
-
----
-
-## ✨ Features
-
-| Feature | Description |
-|---|---|
-| ➕ Add Device | Add network devices such as routers, laptops and servers |
-| 🔗 Connect Devices | Create connections between devices |
-| 📊 Network Visualization | View the network topology graphically |
-| 🔍 DFS Traversal | Explore connected devices using DFS |
-| 🛣️ Path Detection | Check whether a route exists between two devices |
-| 🟡 Path Highlighting | Highlight the discovered route visually |
-| 🔄 Reset Network | Clear the existing network |
-
----
-
-## 🧠 Data Structures & Algorithms Used
-
-### 🌐 Graph Data Structure
-
-A graph represents the network.
-
-- **Vertices:** Network devices
-- **Edges:** Connections between devices
-- **Representation:** Adjacency structure using `QMap` and `QSet`
-- **Graph Type:** Undirected Graph
-
-Example network:
-
-```text
-       Router
-       /    \
-   Laptop   Server
-      |        |
-   Mobile   Printer
-```
-
-### 🔍 Depth First Search (DFS)
-
-DFS is used to explore the network starting from a selected device.
-
-It visits a device, marks it as visited and recursively explores its unvisited neighbours.
-
-### 🛣️ Path Finding
-
-The application uses recursive graph traversal with backtracking to find a route between a source and destination device.
-
-A discovered route is displayed and highlighted in yellow.
-
----
-
-## 🖥️ Project Screenshots
-
-### Network Visualization
-![Network Connection Analyzer](Screenshot%20from%202026-11-03%2013-38-12.png)
-
----
-
-## ⚙️ Technologies Used
+## 🛠️ Technologies Used
 
 - C++
 - Qt5 Widgets
-- Graph Data Structure
-- QMap and QSet
-- Depth First Search
-- Recursive Algorithms
+- Qt5 Network
+- Linux / Ubuntu
+- Nmap
+- Git and GitHub
 
----
+## 📚 Data Structures and Algorithms
 
-## 🚀 How to Run
+| Concept | Application |
+|---|---|
+| Graph | Represents devices and connections |
+| Adjacency List | Stores graph connections |
+| Hash-based Sets | Stores neighbouring devices and visited nodes |
+| Depth First Search | Traverses the network graph |
+| Graph Traversal | Checks connectivity between nodes |
 
-### Option 1: Download the Application
+## 🖥️ Application Screenshots
 
-1. Open the Releases section.
-2. Download `NetworkGUI`.
-3. Open Terminal in the Downloads folder.
-4. Execute:
+The application provides a graphical interface containing:
+- Device information table
+- Network graph visualization
+- Connectivity testing controls
+- DFS and path-checking functionality
+
+## ⚙️ Installation and Execution
+
+### Requirements
+- Ubuntu/Linux
+- C++ compiler (g++)
+- Qt5 development libraries
+- Nmap
+
+### Install dependencies
 
 ```bash
-chmod +x NetworkGUI
+sudo apt update
+sudo apt install g++ qtbase5-dev libqt5network5 nmap
+```
+
+### Clone the repository
+
+```bash
+git clone https://github.com/yuvikasaini30/Network-Connection-Analyzer.git
+```
+
+### Open the project folder
+
+```bash
+cd Network-Connection-Analyzer
+```
+
+### Compile the application
+
+```bash
+g++ gui.cpp -o NetworkGUI $(pkg-config --cflags --libs Qt5Widgets Qt5Network) -fPIC
+```
+
+### Run the application
+
+```bash
 ./NetworkGUI
 ```
 
-### Option 2: Compile From Source
+### Desktop launcher
 
-Install the Qt5 development packages, then run:
+On your configured Ubuntu desktop, the application can also be opened using the desktop shortcut. The `launch.sh` script launches the GUI.
 
-```bash
-g++ gui.cpp -o NetworkGUI $(pkg-config --cflags --libs Qt5Widgets) -fPIC
-```
+## ⚠️ Project Scope
 
-Launch the application:
+The scanner currently detects the local system's network interface. Additional devices and graph connections can be added manually. The graph represents configured connections and does not automatically discover the physical network topology
 
-```bash
-./NetworkGUI
-```
+👩‍💻 Developer
 
----
+Yuvika Saini
 
-## 📥 Download
+UID: 25BCS13336
 
-**[⬇️ Download Network Connection Analyzer v1.0](https://github.com/yuvikasaini30/Network-Connection-Analyzer/releases/tag/v1.0)**
+Section: 705A
 
----
+BE Computer Science and Engineering
 
-## 📂 Source Code
+Chandigarh University
 
-**[View Project Repository on GitHub](https://github.com/yuvikasaini30/Network-Connection-Analyzer)**
+🎓 Project Information
 
----
+Subject: Advanced Data Structures
 
-## 👩‍💻 Developer
+Project: Network Connection Analyzer
 
-**Yuvika Saini**
+Academic Session: July–December 2026
 
-- UID: 25BCS13336
-- Section: 705A
-- Program: B.E. Computer Science and Engineering
-- Semester: 3rd
-
----
-
-⭐ *Developed as an academic project to demonstrate Graph Data Structures and DFS Traversal.*
+Developed as an academic project to demonstrate graph data structures, traversal algorithms, network connectivity, and GUI development in C++.
