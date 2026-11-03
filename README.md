@@ -81,4 +81,88 @@ The desktop application combines network connectivity testing with graph-based d
 ## 🖥️ Application Interface
 
 <p align="center">
-  <img src="screenshots
+  <img src="screenshots/network-analyzer.png" width="800" alt="Network Connection Analyzer application">
+</p>
+
+The desktop application includes:
+
+A device information table showing IP and MAC addresses.
+
+A graphical network area displaying nodes and connections.
+
+Controls for scanning, adding devices, and connecting nodes.
+
+Connectivity and latency results.
+
+🎥 Project Demo
+
+Watch the Network Connection Analyzer in action:
+
+▶️ Watch Project Demo
+
+⚙️ Installation & Setup
+
+1. Install dependencies
+
+sudo apt update
+sudo apt install g++ qtbase5-dev libqt5network5 nmap
+
+2. Clone the repository
+
+git clone https://github.com/yuvikasaini30/Network-Connection-Analyzer.git
+
+3. Navigate to the project
+
+cd Network-Connection-Analyzer
+
+4. Compile
+
+g++ gui.cpp -o NetworkGUI $(pkg-config --cflags --libs Qt5Widgets Qt5Network) -fPIC
+
+5. Run
+
+./NetworkGUI
+
+🌐 Access the Web Version
+
+Open the deployed application:
+
+https://network-connection-analyzer-web-ver.vercel.app/
+
+No installation is required for the browser version.
+
+🖱️ Desktop Launching
+
+The project also includes a launch.sh script for launching the GUI through a configured Linux desktop shortcut.
+
+⚠️ Project Scope
+
+The desktop scanner currently detects the local system's active network interface. Additional devices and graph connections can be added manually.
+
+The graph represents configured connections; it does not automatically discover the physical network topology.
+
+The browser version demonstrates graph operations and manually configured network devices. Physical IP/MAC detection and ping-based connectivity testing are available in the native desktop application.
+
+👩‍💻 Developer
+
+Yuvika Saini
+
+UID: 25BCS13336
+
+Section: 705A
+
+BE Computer Science and Engineering
+
+Chandigarh University
+
+🎓 Academic Project
+
+Subject: Advanced Data Structures
+
+Project Title: Network Connection Analyzer
+
+Academic Session: July–December 2026
+
+<p align="center">
+  <b>Built with 💙 using C++, Qt5, HTML, CSS and JavaScript</b>
+</p>
