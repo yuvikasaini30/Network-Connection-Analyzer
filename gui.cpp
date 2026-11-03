@@ -1,3 +1,8 @@
+#include <QAbstractSocket>
+#include <QNetworkInterface>
+#include <QHostAddress>
+#include <QProcess>
+#include <QXmlStreamReader>
 #include <QtMath>
 #include <cmath>
 #include <functional>
@@ -6,6 +11,8 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QLabel>
+#include <QTableWidget>
+#include <QHeaderView>
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -31,6 +38,7 @@ class NetworkWindow : public QMainWindow {
     QGraphicsScene *scene;
     QLabel *status;
     QLabel *stats;
+    QTableWidget *deviceTable;
 QStringList highlightedPath;
 public:
     NetworkWindow() {
@@ -51,6 +59,11 @@ public:
         stats = new QLabel("Devices: 0     Connections: 0");
         stats->setStyleSheet("font-size:16px; padding:8px;");
         mainLayout->addWidget(stats);
+        deviceTable = new QTableWidget(0, 2, this);
+deviceTable->setHorizontalHeaderLabels({"IP Address", "MAC Address"});
+deviceTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+deviceTable->setMaximumHeight(120);
+mainLayout->addWidget(deviceTable);
 
         scene = new QGraphicsScene(this);
         QGraphicsView *view = new QGraphicsView(scene);
@@ -183,6 +196,176 @@ if (found) {
         "No path exists between the devices."
     );
 }
+        });
+
+        
+        addButton(buttons, "Check Connectivity", [this]() {
+    bool ok;
+    QString ip = QInputDialog::getText(
+        this, "Connectivity Check",
+        "Enter device IP address:"
+    , QLineEdit::Normal, "", &ok);
+
+    if (!ok || ip.isEmpty())
+        return;
+
+    QHostAddress address;
+
+    if (!address.setAddress(ip)) {
+        QMessageBox::warning(this, "Invalid IP", "Enter a valid IP address.");
+        return;
+    }
+
+    QProcess *ping = new QProcess(this);
+    status->setText("Checking connectivity...");
+
+    connect(ping, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+    this, [this, ping, ip](int exitCode, QProcess::ExitStatus) {
+
+        QString output = ping->readAllStandardOutput();
+
+        if (exitCode == 0) {
+            int start = output.indexOf("time=");
+            QString latency = "Unavailable";
+
+            if (start != -1) {
+                start += 5;
+                int end = output.indexOf(" ms", start);
+
+                if (end != -1)
+                    latency = output.mid(start, end - start) + " ms";
+            }
+
+            status->setText(ip + " reachable | Latency: " + latency);
+
+            QMessageBox::information(
+                this, "Connectivity Result",
+                ip + " is reachable!\nResponse Time: " + latency
+            );
+        } else {
+            status->setText(ip + " is unreachable.");
+
+            QMessageBox::warning(
+                this, "Connectivity Result",
+                ip + " is unreachable."
+            );
+        }
+
+        ping->deleteLater();
+    });
+
+    ping->start("ping", QStringList() << "-c" << "1" << "-W" << "2" << ip);
+});
+addButton(buttons, "Scan This PC", [this]() {
+            QProcess *scanner = new QProcess(this);
+            status->setText("Scanning this computer...");
+
+            connect(scanner,
+                QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+                this, [this, scanner](int exitCode, QProcess::ExitStatus) {
+
+                QByteArray output = scanner->readAllStandardOutput();
+
+                if (exitCode != 0) {
+                    status->setText("Nmap scan failed.");
+                    scanner->deleteLater();
+                    return;
+                }
+
+                QXmlStreamReader xml(output);
+                QString address;
+
+                while (!xml.atEnd()) {
+                    xml.readNext();
+
+                    if (xml.isStartElement() &&
+                        xml.name() == "address" &&
+                        xml.attributes().value("addrtype") == "ipv4") {
+                        address = xml.attributes().value("addr").toString();
+                        break;
+                    }
+                }
+
+               if (!address.isEmpty()) {
+    QString macAddress = "Not available";
+
+    for (const QNetworkInterface &iface : QNetworkInterface::allInterfaces()) {
+        for (const QNetworkAddressEntry &entry : iface.addressEntries()) {
+            if (entry.ip().toString() == address) {
+                macAddress = iface.hardwareAddress();
+                break;
+            }
+        }
+
+        if (macAddress != "Not available")
+            break;
+    }
+
+    graph[address];
+    refresh();
+
+    status->setText("Detected: " + address + " | MAC: " + macAddress);
+int row = deviceTable->rowCount();
+deviceTable->insertRow(row);
+deviceTable->setItem(row, 0, new QTableWidgetItem(address));
+deviceTable->setItem(row, 1, new QTableWidgetItem(macAddress));
+    QMessageBox::information(
+        this, "Scan Complete",
+        "IP Address: " + address + "\nMAC Address: " + macAddress
+    );
+}else {
+                    status->setText("No device detected.");
+                }
+
+                scanner->deleteLater();
+            });
+
+            QString targetIp;
+            QString fallbackIp;
+
+            for (const QNetworkInterface &iface : QNetworkInterface::allInterfaces()) {
+                if (!(iface.flags() & QNetworkInterface::IsUp) ||
+                    !(iface.flags() & QNetworkInterface::IsRunning) ||
+                    (iface.flags() & QNetworkInterface::IsLoopBack))
+                    continue;
+
+                QString name = iface.name().toLower();
+
+                if (name.startsWith("docker") || name.startsWith("virbr") ||
+                    name.startsWith("veth") || name.startsWith("br-"))
+                    continue;
+
+                for (const QNetworkAddressEntry &entry : iface.addressEntries()) {
+                    QHostAddress ip = entry.ip();
+
+                    if (ip.protocol() != QAbstractSocket::IPv4Protocol ||
+                        ip.isLoopback())
+                        continue;
+
+                    if (name.startsWith("wl")) {
+                        targetIp = ip.toString();
+                        break;
+                    }
+
+                    if (fallbackIp.isEmpty())
+                        fallbackIp = ip.toString();
+                }
+
+                if (!targetIp.isEmpty())
+                    break;
+            }
+
+            if (targetIp.isEmpty())
+                targetIp = fallbackIp;
+
+            if (targetIp.isEmpty()) {
+                status->setText("No active network IP found.");
+                scanner->deleteLater();
+                return;
+            }
+
+            scanner->start("nmap",
+                QStringList() << "-sn" << "-oX" << "-" << targetIp);
         });
 
         addButton(buttons, "Reset", [this]() {
