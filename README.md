@@ -1,115 +1,133 @@
 # 🌐 Network Connection Analyzer
 
-### C++ | Qt5 | Advanced Data Structures
+<p align="center">
+  <img src="globe.png" width="120" alt="Network Connection Analyzer Globe Icon">
+</p>
 
-A desktop-based Network Connection Analyzer developed using **C++ and Qt5**. The application combines network connectivity testing with graph-based representation and traversal of connected devices.
+<h3 align="center">A Graph-Based Network Monitoring Application Built with C++ and Qt5</h3>
 
-## 🚀 Features
+<p align="center">
+  <img src="https://img.shields.io/badge/Language-C%2B%2B-blue">
+  <img src="https://img.shields.io/badge/GUI-Qt5-green">
+  <img src="https://img.shields.io/badge/Platform-Linux-orange">
+  <img src="https://img.shields.io/badge/Project-Advanced%20Data%20Structures-purple">
+</p>
 
-- **IP Address Detection:** Detects the current system's IP address.
-- **MAC Address Detection:** Retrieves the MAC address of the active network interface.
-- **Device Management:** Add devices manually.
-- **Network Visualization:** Displays devices and their connections using a graphical interface.
-- **Connection Management:** Create connections between devices.
-- **DFS Traversal:** Performs Depth First Search on the network graph.
-- **Path Checking:** Checks whether a path exists between two devices.
-- **Connectivity Testing:** Checks whether an IP address is reachable using ping.
-- **Latency Measurement:** Displays the response time in milliseconds.
-- **Reset Function:** Clears the current network graph and device table.
-- **Desktop Launcher:** Opens the GUI through a desktop shortcut with a custom globe icon.
+---
+
+## ✨ Overview
+
+**Network Connection Analyzer** is a desktop-based application developed using C++ and Qt5. It combines network connectivity testing with graph-based device representation and traversal algorithms.
+
+The project demonstrates how graph data structures can represent network devices and their connections through an interactive graphical interface.
+
+## 🚀 Key Features
+
+| Feature | Description |
+|---|---|
+| 🌐 IP Detection | Detects the current system's IP address |
+| 🔐 MAC Detection | Retrieves the active interface's MAC address |
+| 💻 Device Management | Allows users to add devices manually |
+| 🔗 Network Connections | Creates connections between devices |
+| 📊 Graph Visualization | Displays devices and connections visually |
+| 🔍 DFS Traversal | Performs Depth First Search |
+| 🛣️ Path Checking | Checks whether a path exists between devices |
+| 📡 Connectivity Testing | Checks IP reachability using ping |
+| ⚡ Latency Measurement | Displays response time in milliseconds |
+| 🔄 Reset | Clears the current graph and device table |
+| 🖥️ Desktop Launcher | Supports one-click launching with a custom icon |
 
 ## 🛠️ Technologies Used
 
-- C++
-- Qt5 Widgets
-- Qt5 Network
-- Linux / Ubuntu
-- Nmap
-- Git and GitHub
+- **C++** — Core programming language
+- **Qt5 Widgets** — Graphical user interface
+- **Qt5 Network** — Network interface information
+- **Nmap** — Local host discovery
+- **Linux / Ubuntu** — Development environment
+- **Git & GitHub** — Version control
 
-## 📚 Data Structures and Algorithms
+## 🧠 Data Structures & Algorithms
 
-| Concept | Application |
+| Concept | Implementation |
 |---|---|
-| Graph | Represents devices and connections |
-| Adjacency List | Stores graph connections |
-| Hash-based Sets | Stores neighbouring devices and visited nodes |
-| Depth First Search | Traverses the network graph |
-| Graph Traversal | Checks connectivity between nodes |
+| Graph | Represents network devices |
+| Adjacency List | Stores device connections |
+| QMap | Stores graph nodes |
+| QSet | Stores neighbouring and visited nodes |
+| DFS | Traverses the graph |
+| Graph Search | Checks connectivity and paths |
 
-## 🖥️ Application Screenshots
+## 🖥️ Application Interface
 
-The application provides a graphical interface containing:
-- Device information table
-- Network graph visualization
-- Connectivity testing controls
-- DFS and path-checking functionality
+The application includes:
 
-## ⚙️ Installation and Execution
+- A device information table showing IP and MAC addresses.
+- A graphical network area displaying nodes and connections.
+- Controls for scanning, adding devices, and connecting nodes.
+- Connectivity and latency results.
 
-### Requirements
-- Ubuntu/Linux
-- C++ compiler (g++)
-- Qt5 development libraries
-- Nmap
+## ⚙️ Installation & Setup
 
-### Install dependencies
+### 1. Install dependencies
 
 ```bash
 sudo apt update
 sudo apt install g++ qtbase5-dev libqt5network5 nmap
 ```
 
-### Clone the repository
+### 2. Clone the repository
 
 ```bash
 git clone https://github.com/yuvikasaini30/Network-Connection-Analyzer.git
 ```
 
-### Open the project folder
+### 3. Navigate to the project
 
 ```bash
 cd Network-Connection-Analyzer
 ```
 
-### Compile the application
+### 4. Compile
 
 ```bash
 g++ gui.cpp -o NetworkGUI $(pkg-config --cflags --libs Qt5Widgets Qt5Network) -fPIC
 ```
 
-### Run the application
+### 5. Run
 
 ```bash
 ./NetworkGUI
 ```
 
-### Desktop launcher
+### 🖱️ Desktop Launching
 
-On your configured Ubuntu desktop, the application can also be opened using the desktop shortcut. The `launch.sh` script launches the GUI.
+The project also includes a `launch.sh` script for launching the GUI through a configured Linux desktop shortcut.
 
 ## ⚠️ Project Scope
 
-The scanner currently detects the local system's network interface. Additional devices and graph connections can be added manually. The graph represents configured connections and does not automatically discover the physical network topology
+The scanner currently detects the local system's active network interface. Additional devices and graph connections can be added manually.
 
-👩‍💻 Developer
+The graph represents configured connections; it does not automatically discover the physical network topology.
 
-Yuvika Saini
+## 👩‍💻 Developer
 
-UID: 25BCS13336
+**Yuvika Saini**
 
-Section: 705A
+- UID: `25BCS13336`
+- Section: `705A`
+- BE Computer Science and Engineering
+- Chandigarh University
 
-BE Computer Science and Engineering
+## 🎓 Academic Project
 
-Chandigarh University
+**Subject:** Advanced Data Structures
 
-🎓 Project Information
+**Project Title:** Network Connection Analyzer
 
-Subject: Advanced Data Structures
+**Academic Session:** July–December 2026
 
-Project: Network Connection Analyzer
+---
 
-Academic Session: July–December 2026
-
-Developed as an academic project to demonstrate graph data structures, traversal algorithms, network connectivity, and GUI development in C++.
+<p align="center">
+  <b>Built with 💙 using C++ and Qt5</b>
+</p>
