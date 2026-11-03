@@ -68,6 +68,12 @@ The application includes:
 - Controls for scanning, adding devices, and connecting nodes.
 - Connectivity and latency results.
 
+## 🎥 Project Demo
+
+Watch the Network Connection Analyzer in action:
+
+[▶️ Watch Project Demo](https://github.com/yuvikasaini30/Network-Connection-Analyzer/releases/download/v1.0/Network-Connection-Analyzer-Demo.mp4)
+
 ## ⚙️ Installation & Setup
 
 ### 1. Install dependencies
