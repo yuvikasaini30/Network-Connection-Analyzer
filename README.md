@@ -31,3 +31,7 @@ A C++ desktop application that analyzes network connections using Graphs and Dep
 ## Developer
 Yuvika Saini
 UID: 25BCS13336
+
+## Project Screenshot
+
+![Network Connection Analyzer](Screenshot%20from%202026-11-03%2013-38-12.png)
