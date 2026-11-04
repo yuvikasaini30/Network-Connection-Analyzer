@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,6 +67,7 @@
                 <button id="pathButton" class="secondary">Check Path</button>
                 <button id="resetButton" class="danger">Reset Network</button>
             </div>
+
             <div class="controls">
                 <select id="pathFrom">
                     <option value="">Path: starting device</option>
@@ -74,16 +76,33 @@
                     <option value="">Path: destination device</option>
                 </select>
             </div>
-            <div id="result" class="result">Analysis results will appear here.</div>
+
+            <div id="result" class="result">
+                Analysis results will appear here.
+            </div>
         </section>
 
         <section class="panel note">
             <h2>About this version</h2>
-            <p>This browser version demonstrates network topology, device connections, graph traversal and path checking. Physical network scanning, IP/MAC detection and ping tests are available in the native desktop application.</p>
+            <p>
+                This browser version demonstrates network topology,
+                device connections, graph traversal and path checking.
+                Physical network scanning, IP/MAC detection and ping
+                tests are available in the native desktop application.
+            </p>
         </section>
     </main>
 
-    <footer>Network Connection Analyzer · C++ Desktop + Web Edition</footer>
+    <footer>
+        Network Connection Analyzer · C++ Desktop + Web Edition
+    </footer>
+
+    <!-- Firebase Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <!-- Website JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>

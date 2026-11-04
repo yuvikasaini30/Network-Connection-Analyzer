@@ -1,7 +1,30 @@
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyA49yqqOo5W4J6nm2SNIsU3yEene_WnHSw",
+    authDomain: "network-connection-analyzer.firebaseapp.com",
+    projectId: "network-connection-analyzer",
+    storageBucket: "network-connection-analyzer.firebasestorage.app",
+    messagingSenderId: "107762431853",
+    appId: "1:107762431853:web:221eefd1e5360f7fc94c64"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+const networkRef = db.collection("networks").doc("demo");
+
+let cloudReady = false;
+let firstCloudLoad = true;
+
+// Restore the local browser backup first
 const graph = new Map();
 
 try {
-    const saved = JSON.parse(localStorage.getItem("networkAnalyzerGraph") || "{}");
+    const saved = JSON.parse(
+        localStorage.getItem("networkAnalyzerGraph") || "{}"
+    );
+
     for (const [name, neighbors] of Object.entries(saved)) {
         graph.set(name, new Set(neighbors));
     }
@@ -15,6 +38,24 @@ const connectTo = document.getElementById("connectTo");
 const pathFrom = document.getElementById("pathFrom");
 const pathTo = document.getElementById("pathTo");
 const result = document.getElementById("result");
+
+function saveCloud() {
+    if (!cloudReady) return;
+
+    const savedGraph = {};
+
+    for (const [name, neighbors] of graph) {
+        savedGraph[name] = [...neighbors];
+    }
+
+    networkRef.set({
+        graph: savedGraph,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).catch(error => {
+        console.error("Cloud save failed:", error);
+        result.textContent = "Cloud save failed. Check your connection.";
+    });
+}
 
 function addDevice() {
     const name = deviceName.value.trim();
@@ -85,7 +126,8 @@ function checkPath() {
     const end = pathTo.value;
 
     if (!start || !end) {
-        result.textContent = "Please select a starting and destination device.";
+        result.textContent =
+            "Please select a starting and destination device.";
         return;
     }
 
@@ -115,7 +157,8 @@ function checkPath() {
     }
 
     if (!visited.has(end)) {
-        result.textContent = `No path exists between ${start} and ${end}.`;
+        result.textContent =
+            `No path exists between ${start} and ${end}.`;
         return;
     }
 
@@ -127,7 +170,8 @@ function checkPath() {
         current = parent.get(current);
     }
 
-    result.textContent = `A path exists! Route: ${route.join(" → ")}`;
+    result.textContent =
+        `A path exists! Route: ${route.join(" → ")}`;
 }
 
 function resetNetwork() {
@@ -178,6 +222,7 @@ function drawGraph() {
 
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
+
     svg.setAttribute("width", "100%");
     svg.setAttribute("height", height);
     svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
@@ -185,7 +230,9 @@ function drawGraph() {
     const positions = new Map();
 
     names.forEach((name, index) => {
-        const angle = (2 * Math.PI * index / names.length) - Math.PI / 2;
+        const angle =
+            (2 * Math.PI * index / names.length) - Math.PI / 2;
+
         positions.set(name, {
             x: centerX + radius * Math.cos(angle),
             y: centerY + radius * Math.sin(angle)
@@ -225,12 +272,15 @@ function drawGraph() {
         svg.appendChild(circle);
 
         const label = document.createElementNS(svgNS, "text");
+
         label.setAttribute("x", point.x);
         label.setAttribute("y", point.y + 42);
         label.setAttribute("fill", "#e5e7eb");
         label.setAttribute("font-size", "12");
         label.setAttribute("text-anchor", "middle");
-        label.textContent = name.length > 15 ? name.slice(0, 13) + "…" : name;
+
+        label.textContent =
+            name.length > 15 ? name.slice(0, 13) + "…" : name;
 
         svg.appendChild(label);
     }
@@ -238,7 +288,7 @@ function drawGraph() {
     container.appendChild(svg);
 }
 
-function update() {
+function update(saveToCloud = true) {
     updateSelect(connectFrom, "Select first device");
     updateSelect(connectTo, "Select second device");
     updateSelect(pathFrom, "Path: starting device");
@@ -247,28 +297,48 @@ function update() {
     document.getElementById("deviceCount").textContent = graph.size;
 
     let connections = 0;
+
     for (const neighbors of graph.values()) {
         connections += neighbors.size;
     }
+
     connections /= 2;
 
     document.getElementById("connectionCount").textContent = connections;
+
     document.getElementById("networkStatus").textContent =
         graph.size === 0 ? "Empty" : "Active";
 
     drawGraph();
 
     const saved = {};
+
     for (const [name, neighbors] of graph) {
         saved[name] = [...neighbors];
     }
-    localStorage.setItem("networkAnalyzerGraph", JSON.stringify(saved));
+
+    localStorage.setItem(
+        "networkAnalyzerGraph",
+        JSON.stringify(saved)
+    );
+
+    if (saveToCloud) {
+        saveCloud();
+    }
 }
 
-document.getElementById("addDevice").addEventListener("click", addDevice);
-document.getElementById("connectDevices").addEventListener("click", connectDevices);
-document.getElementById("pathButton").addEventListener("click", checkPath);
-document.getElementById("resetButton").addEventListener("click", resetNetwork);
+// Button events
+document.getElementById("addDevice")
+    .addEventListener("click", addDevice);
+
+document.getElementById("connectDevices")
+    .addEventListener("click", connectDevices);
+
+document.getElementById("pathButton")
+    .addEventListener("click", checkPath);
+
+document.getElementById("resetButton")
+    .addEventListener("click", resetNetwork);
 
 document.getElementById("dfsButton").addEventListener("click", () => {
     const start = pathFrom.value || graph.keys().next().value;
@@ -278,7 +348,8 @@ document.getElementById("dfsButton").addEventListener("click", () => {
         return;
     }
 
-    result.textContent = `DFS Traversal: ${dfs(start).join(" → ")}`;
+    result.textContent =
+        `DFS Traversal: ${dfs(start).join(" → ")}`;
 });
 
 deviceName.addEventListener("keydown", event => {
@@ -287,4 +358,46 @@ deviceName.addEventListener("keydown", event => {
 
 window.addEventListener("resize", drawGraph);
 
-update();
+// Initial display
+update(false);
+
+// Sign in anonymously and listen for cloud changes
+auth.signInAnonymously()
+    .then(() => {
+        networkRef.onSnapshot(doc => {
+            if (doc.exists) {
+                const cloudGraph = doc.data().graph || {};
+
+                graph.clear();
+
+                for (const [name, neighbors] of Object.entries(cloudGraph)) {
+                    graph.set(name, new Set(neighbors));
+                }
+
+                cloudReady = true;
+                update(false);
+
+                if (firstCloudLoad) {
+                    result.textContent = "Connected to cloud successfully.";
+                }
+            } else {
+                cloudReady = true;
+                saveCloud();
+
+                if (firstCloudLoad) {
+                    result.textContent =
+                        "Cloud connected. Your network is ready to save.";
+                }
+            }
+
+            firstCloudLoad = false;
+        }, error => {
+            console.error("Cloud sync error:", error);
+            result.textContent = "Cloud sync error. Please check Firebase.";
+        });
+    })
+    .catch(error => {
+        console.error("Authentication error:", error);
+        result.textContent =
+            "Could not connect to cloud. Please check Firebase Authentication.";
+    });
