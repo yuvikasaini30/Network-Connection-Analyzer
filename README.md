@@ -11,6 +11,7 @@
   <img src="https://img.shields.io/badge/GUI-Qt5-green">
   <img src="https://img.shields.io/badge/Platform-Linux-orange">
   <img src="https://img.shields.io/badge/Project-Advanced%20Data%20Structures-purple">
+  <img src="https://img.shields.io/badge/Cloud-Firebase-orange">
 </p>
 
 ---
@@ -22,18 +23,23 @@ Try the browser-based version:
 **[🚀 Launch Network Connection Analyzer](https://network-connection-analyzer-web-ver.vercel.app/)**
 
 The web edition supports:
+
 - Device management
 - Network graph visualization
 - Device connections
 - DFS traversal
 - Path checking using BFS
-- Automatic saving using browser local storage
+- Firebase Firestore cloud storage
+- Real-time synchronization across browser tabs
+- Local browser backup using Local Storage
 
 ## ✨ Overview
 
-**Network Connection Analyzer** is a network monitoring and graph visualization project developed using C++ and Qt5, with an additional browser-based web version.
+**Network Connection Analyzer** is a network monitoring and graph visualization project developed using C++ and Qt5, with an additional cloud-connected browser-based web version.
 
-The desktop application combines network connectivity testing with graph-based device representation and traversal algorithms. The web version demonstrates network topology management and graph operations through an interactive interface.
+The desktop application combines network connectivity testing with graph-based device representation and traversal algorithms.
+
+The web application demonstrates network topology management and graph operations through an interactive interface, with Firebase integration for cloud storage and real-time synchronization.
 
 ## 🚀 Key Features
 
@@ -48,7 +54,9 @@ The desktop application combines network connectivity testing with graph-based d
 | 🛣️ Path Checking | Checks whether a path exists between devices |
 | 📡 Connectivity Testing | Checks IP reachability using ping (desktop) |
 | ⚡ Latency Measurement | Displays response time in milliseconds (desktop) |
-| 💾 Automatic Saving | Saves web network data using local storage |
+| ☁️ Cloud Storage | Saves web network data in Firebase Firestore |
+| 🔄 Real-Time Sync | Synchronizes network changes across browser tabs |
+| 💾 Local Backup | Maintains a browser Local Storage backup |
 | 🔄 Reset | Clears the current graph and device table |
 | 🖥️ Desktop Launcher | Supports one-click launching with a custom icon |
 
@@ -61,9 +69,32 @@ The desktop application combines network connectivity testing with graph-based d
 - **HTML** — Web page structure
 - **CSS** — Web interface styling
 - **JavaScript** — Web application logic
+- **Firebase Authentication** — Anonymous user authentication
+- **Firebase Firestore** — Cloud database and real-time synchronization
 - **Vercel** — Web deployment and hosting
 - **Linux / Ubuntu** — Development environment
 - **Git & GitHub** — Version control
+
+## ☁️ Cloud Integration
+
+The web version is integrated with Firebase to provide cloud-based data storage and synchronization.
+
+### Cloud Features
+
+- Anonymous authentication using Firebase Authentication.
+- Stores network devices and connections in Firebase Firestore.
+- Automatically saves changes to the cloud.
+- Restores network data after refreshing the website.
+- Synchronizes changes across multiple browser tabs in real time.
+- Maintains a local browser backup using Local Storage.
+
+### Cloud Architecture
+
+**Browser Application → Firebase Authentication → Firebase Firestore**
+
+The application is hosted on Vercel and connected to the GitHub repository for deployment.
+
+**Note:** The current demonstration uses a shared Firestore network. It is intended for project demonstration, not private user data.
 
 ## 🧠 Data Structures & Algorithms
 
@@ -168,5 +199,5 @@ The browser version demonstrates graph operations and manually configured networ
 ---
 
 <p align="center">
-  <b>Built with 💙 using C++, Qt5, HTML, CSS and JavaScript</b>
+  <b>Built with 💙 using C++, Qt5, HTML, CSS, JavaScript and Firebase</b>
 </p>
